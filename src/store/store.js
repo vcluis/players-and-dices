@@ -1,15 +1,17 @@
+import { createStore } from "redux";
+
 const ADD_MOVEMENT = "ADD_MOVEMENT";
 const ADD_NAME = "ADD_NAME";
 const RESET = "RESET";
 
 const defaultState = [
     {
-        id: 1,
+        id: 0,
         name: "",
         values: []
     },
     {
-        id: 2,
+        id: 1,
         name: "",
         values: []
     }
@@ -42,12 +44,26 @@ const resetAction = () => {
 }
 
 const playerReducer = (state = defaultState, action) => {
+    const newState = Object.assign({}, state);
     switch(action.type){
         case ADD_MOVEMENT:
-            return 
+            {
+                const {id, value} = action.data;
+                newState[id].values = [...newState[id].values, value];
+                return newState;
+            }
         case ADD_NAME:
+            {
+                const {id, name} = action.data;
+                newState[id].name = name;
+                return newState;
+            }
         case RESET:
-        case DEFAULT:
-            return defaultState
+        default:
+            return defaultState;
     }
 }
+
+const store = createStore(playerReducer);
+
+export default store;

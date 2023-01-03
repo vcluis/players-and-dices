@@ -1,12 +1,26 @@
 import { Fragment } from "react";
 import getDiceFace from "../dice/DiceFaces";
 
-const Instruction = ({number, text}) => {
-    const image = getDiceFace(number);
+const instructionTextStyle = {
+    paddingTop: "25px",
+    paddingLeft: "25px",
+    paddingRight: "25px",
+    paddingBottom: "25px",
+    fontSize: "25px"
+}
+
+const Instruction = ({index, text}) => {
+    const image = getDiceFace(index);
     return (
         <Fragment>
-            <img src={image} width="15" height="15" />
-            <div>{text}</div>
+            <tr>
+                <td>
+                    <img src={image} width="25" height="25" />
+                </td>
+                <td style={instructionTextStyle}>
+                    {text}
+                </td>
+            </tr>
         </Fragment>
     );
 }

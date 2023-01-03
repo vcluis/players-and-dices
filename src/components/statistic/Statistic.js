@@ -3,7 +3,7 @@ import { Fragment } from "react";
 
 const Statistic = ({name, values}) => {
 
-    const renderedValues = values.map(element => <li>{element}</li>)
+    const renderedValues = values.map(element => <li>{element}</li>);
 
     return (
         <Fragment>

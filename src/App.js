@@ -1,15 +1,21 @@
 import React from "react";
+import {RouterProvider, Routes, Route} from "react-router/dist";
 import Dice from "./components/dice/Dice";
 import Statistic from "./components/statistic/Statistic";
+import Main from "./components/screens/Main";
+import Register from "./components/screens/Register";
+import Play from "./components/screens/Play";
+// import { RouterProvider } from "react-router/dist";
 
 const App = () => {
     return (
-        <div>
-            <Dice value={1} />
-            <Dice value={3} />
-            <Dice value={6} />
-            <Statistic name="new player" values={[1, 2, 3, 6, 1]} />
-        </div>
+        <RouterProvider>
+            <Routes>
+                <Route element={<Main />} path="/" exact />
+                <Route element={<Register />} path="/register" />
+                <Route element={<Play />} path="/play" />
+            </Routes>
+        </RouterProvider>
     );
 }
 
