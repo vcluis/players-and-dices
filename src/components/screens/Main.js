@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import Instructions from "./../instruction/Instructions";
 
 const Main = () => {
@@ -6,14 +6,8 @@ const Main = () => {
         <div className="container mb-5 mt-5">
             <div className="row justify-content-center">
                 <div className="col-md-6">
-                    {/* <div className="card">
-                        <div className="card-body"> */}
-                            <Instructions />
-                            {/* <div className="text-center"> */}
-                                <button type="submit" className="btn btn-xl btn-primary">Go & play!</button>
-                            {/* </div> */}
-                        {/* </div>
-                    </div> */}
+                    <Instructions />
+                    <Link to="/register" className="btn btn-primary">Go & Play</Link>
                 </div>
             </div>
         </div>

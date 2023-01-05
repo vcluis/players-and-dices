@@ -66,4 +66,4 @@ const playerReducer = (state = defaultState, action) => {
 
 const store = createStore(playerReducer);
 
-export default store;
+export {store, nameAction, movementAction};
