@@ -9,23 +9,32 @@ const styles = {
 
 const Play = () => {
 
-    const firstPlayerName = store.getState()[0].name;
-    const secondPlayerName = store.getState()[1].name;
+    const firstPlayer = store.getState()[0];
+    const secondPlayer = store.getState()[1];
 
     return (
         <div className="container my-5">
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div style={styles.playerName}>
-                        {firstPlayerName}
-                        <Dice />
+                        {firstPlayer.name}
+                    </div>
+                    <div className="row">
+                        <div className="col-4">
+                            <Dice playerId={firstPlayer.id} />
+                        </div>
                     </div>
                 </div>
                 <div className="col-md-6">
                     <div style={styles.playerName}>
-                        {secondPlayerName}
-                        <Dice />
+                        {secondPlayer.name}
                     </div>
+                    <div className="row">
+                        <div className="col-4">
+                            <Dice playerId={secondPlayer.id} />
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
