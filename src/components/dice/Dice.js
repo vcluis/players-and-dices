@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { clear } from "@testing-library/user-event/dist/clear";
+import { useState, useEffect, useRef } from "react";
 import DiceFace from "./DiceFace";
 
 const Dice = ({id}) => {
 
     const [currentValue, setCurrentValue] = useState(1);
     const [diceMoving, setDiceMoving] = useState(false);
+    const [newInterval, setNewInterval] = useState(null);
 
     const swapDiceMoving = () => {
         setDiceMoving(!diceMoving);
@@ -14,25 +16,92 @@ const Dice = ({id}) => {
         return Math.floor(Math.random() * 6) + 1;
     }
 
-    const handleDiceMoving = e => {
-        if(diceMoving){
-            swapDiceMoving();
-            console.log("Dice has been stoped, moving", diceMoving);
+    // let interval = null;
+    // const setNewRandomValue = e => {
+    //     e.preventDefault();
+    //     if(interval !== null){
+    //         clearInterval(interval);
+    //         interval = null;
+    //         return;
+    //     }
+    //     if(interval === null){
+    //         interval = setInterval(() => {
+    //             setCurrentValue(throwDice());
+    //         }, 1000);
+    //     }
+    // }
+
+    useEffect(() => {
+        console.log("current value is:", currentValue);
+    }, [currentValue]);
+
+    // const setNewRandomValue = e => {
+    //     console.log("newInterval state:", newInterval);
+    //     e.preventDefault();
+    //     if(newInterval !== null){
+    //         setNewInterval(null);
+    //         return;
+    //     }
+    //     newInterval = setInterval(() => {
+    //         setCurrentValue(throwDice());
+    //         if(newInterval === null){
+    //             console.log("exiting", newInterval);
+    //             return;
+    //         }
+    //     }, 1000);
+    // }
+
+    // const stopInterval = e => {
+    //     e.preventDefault();
+    //     setNewInterval(null);
+    // }
+
+    // another try IT WORKS
+    // const interval = useRef();
+    // const setNewRandomValue = e => {
+    //     e.preventDefault();
+    //     interval.current = setInterval(() => {
+    //         setCurrentValue(throwDice());
+    //     }, 1000);
+    // }
+
+    // const stopInterval = e => {
+    //     e.preventDefault();
+    //     clearInterval(interval.current);
+    // }
+    // end IT WORKS
+
+    const interval = useRef();
+    const setNewRandomValue = e => {
+        e.preventDefault();
+        interval.current = setInterval(() => {
+            setCurrentValue(throwDice());
+        }, 1000);
+    }
+
+    const stopInterval = e => {
+        e.preventDefault();
+        clearInterval(interval.current);
+    }
+
+    const handleDiceRoll = e => {
+        console.log("interval:", interval);
+        e.preventDefault();
+        if(interval.current){
+            clearInterval(interval.current);
+            interval.current = undefined;
+            return;
         }
-        console.log("Dice is moving, moving", diceMoving);
-        swapDiceMoving();
-        while(diceMoving){
-            setTimeout(() => {
-                setCurrentValue(throwDice());
-                console.log(currentValue);
-            }, 700);
-        }
+        interval.current = setInterval(() => {
+            setCurrentValue(throwDice());
+        }, 1000);
     }
 
     return (
-        // <Dice value={currentValue} onClick={handleDiceMoving} />
-        <div onClick={handleDiceMoving}>
+        <div onClick={handleDiceRoll}>
             <DiceFace value={currentValue} />
+            {/* <button type="submit" className="btn btn-info" onClick={setNewRandomValue}>Roll dice</button>
+            <button type="submit" className="btn btn-danger" onClick={stopInterval}>Stop!</button> */}
         </div>
     );
 }
