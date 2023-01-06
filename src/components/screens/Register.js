@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { store } from "../../store/store";
 import Player from "../player/Player";
 
 const styles = {
@@ -13,23 +14,15 @@ const styles = {
 
 const Register = () => {
 
-    let buttonText = "default text";
-    
-    const checkPlayers = () => {
-        setTimeout(() => {
-            buttonText = "updated text";
-        }, 180);
-        console.log(buttonText);
+    const [playButtonClasses, setPlayButtonClasses] = useState("btn btn-success disabled");
+
+    const handlePlayButtonClasses = () => {
+        const currentState = store.getState();
+        if(currentState[0].name !== "" && currentState[1].name !== "")
+            setPlayButtonClasses("btn btn-success");
     }
 
-
-    let [buttonClasses, setButtonClasses] = useState("btn btn-warning disabled");
-
-    const updateButtonClasses = () => {
-        setTimeout(() => {
-            setButtonClasses("btn btn-warning");
-        });
-    }
+    store.subscribe(handlePlayButtonClasses);
 
     return (
         <div className="container mt-5 mb-5">
@@ -47,13 +40,10 @@ const Register = () => {
             <div className="row">
                 <div className="col">
                     <div className="text-center">
-                        <Link to="/play" disabled className="btn btn-warning text-white">Play!</Link>
+                        <Link to="/play" className={playButtonClasses}>Play!</Link>
                     </div>
                 </div>
             </div>
-            {/* <button type="submit" className="btn btn-secondary" onClick={checkPlayers}>{buttonText}</button> */}
-            <button type="submit" className={buttonClasses}>I'm a button</button>
-            <button type="submit" className="btn btn-primary" onClick={updateButtonClasses}>Update another button classe</button>
         </div>
     );
 }

@@ -1,39 +1,38 @@
-import React from "react";
-import getDiceFace from "./DiceFaces";
+import { useState } from "react";
+import DiceFace from "./DiceFace";
 
-const messages = [
-    "Good luck for the nex time",
-    "That's not a bad number",
-    "Well, today i'm lucky"
-];
+const Dice = ({id}) => {
 
-const getMessage = (value) => {
-    return messages[Math.round(value / 2) - 1];
-}
+    const [currentValue, setCurrentValue] = useState(1);
+    const [diceMoving, setDiceMoving] = useState(false);
 
-/*
-const fakeThrows = 5;
+    const swapDiceMoving = () => {
+        setDiceMoving(!diceMoving);
+    }
 
-const throwDice = () => {
-    return Math.floor(Math.random() * 6) + 1;
-}
-*/
+    const throwDice = () => {
+        return Math.floor(Math.random() * 6) + 1;
+    }
 
-const Dice = ({value}) => {
-    const face = getDiceFace(value);
-    const message = getMessage(value);
+    const handleDiceMoving = e => {
+        if(diceMoving){
+            swapDiceMoving();
+            console.log("Dice has been stoped, moving", diceMoving);
+        }
+        console.log("Dice is moving, moving", diceMoving);
+        swapDiceMoving();
+        while(diceMoving){
+            setTimeout(() => {
+                setCurrentValue(throwDice());
+                console.log(currentValue);
+            }, 700);
+        }
+    }
 
     return (
-        <div className="card">
-            <div className="card-header">You got a {value}</div>
-            <div className="card-body">
-                <div className="card-img">
-                    <img src={face} />
-                </div>
-            </div>
-            <div className="card-footer">
-                {message}
-            </div>
+        // <Dice value={currentValue} onClick={handleDiceMoving} />
+        <div onClick={handleDiceMoving}>
+            <DiceFace value={currentValue} />
         </div>
     );
 }
