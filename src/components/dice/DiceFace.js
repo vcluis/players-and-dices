@@ -11,15 +11,7 @@ const getMessage = (value) => {
     return messages[Math.round(value / 2) - 1];
 }
 
-/*
-const fakeThrows = 5;
-
-const throwDice = () => {
-    return Math.floor(Math.random() * 6) + 1;
-}
-*/
-
-const Dice = ({value}) => {
+const DiceFace = ({value}) => {
     const face = getDiceFace(value);
     const message = getMessage(value);
 
@@ -38,4 +30,4 @@ const Dice = ({value}) => {
     );
 }
 
-export default Dice;
+export default DiceFace;

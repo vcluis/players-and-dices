@@ -10,13 +10,15 @@ const playerInstructions = [
 
 const Instructions = () => {
 
-    const renderedInstructions = playerInstructions.map((element, index) => <Instruction index={index + 1} text={element} />);
+    const renderedInstructions = playerInstructions.map((element, index) => <Instruction key={index} index={index + 1} text={element} />);
 
     return (
         <Fragment>
             <h1>Instructions</h1>
             <table>
-                {renderedInstructions}
+                <tbody>
+                    {renderedInstructions}
+                </tbody>
             </table>
         </Fragment>
     );

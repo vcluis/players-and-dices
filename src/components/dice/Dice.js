@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import DiceFace from "./DiceFace";
 import { store, movementAction } from "../../store/store";
 
@@ -11,16 +11,13 @@ const Dice = ({playerId}) => {
         return Math.floor(Math.random() * 6) + 1;
     }
 
-    useEffect(() => {
-        console.log("current value is:", currentValue);
-    }, [currentValue]);
-
     const handleDiceRoll = e => {
         e.preventDefault();
         if(interval.current){
             clearInterval(interval.current);
             interval.current = undefined;
             store.dispatch(movementAction(playerId, currentValue));
+            console.log(store.getState());
             return;
         }
         interval.current = setInterval(() => {
